@@ -1,3 +1,4 @@
+package com.bookshop.entity;
 import jakarta.persistence.*;
 import java.util.List;
 
