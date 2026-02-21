@@ -1,0 +1,36 @@
+services:
+  # Database Service
+  db:
+    image: mysql:8.0
+    container_name: bookshop-db
+    restart: always
+    environment:
+      - MYSQL_DATABASE=bookshop
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD} # Pulls from GitHub Secrets/.env
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Spring Boot API Service
+  app:
+    build: .
+    container_name: bookshop-api
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/bookshop?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/public/categories"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
