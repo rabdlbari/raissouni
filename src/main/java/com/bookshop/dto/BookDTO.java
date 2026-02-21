@@ -4,7 +4,7 @@ public record BookDTO(
     Long id,
     String title,
     String author,
-    Double price,
+    Float price,
     Integer stock,
     String description,
     Long categoryId,

@@ -1,6 +1,9 @@
 package com.bookshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +18,14 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Email is required")
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
+    @NotBlank(message = "Password is required")
+    @JsonProperty("password")
     private String passwordHash;
 
     @Column(nullable = false)
