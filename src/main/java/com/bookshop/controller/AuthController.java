@@ -1,13 +1,12 @@
 package com.bookshop.controller;
 
 import com.bookshop.entity.User;
-import com.bookshop.service.UserService;
-import com.bookshop.util.JwtUtil;
+import com.bookshop.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,12 +14,31 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtService;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService) {
         this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
+        this.jwtService = jwtService;
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        try {
+            System.out.println("Attempting login for email: " + user.getEmail());
+            System.out.println("Password received from Postman: " + user.getPassword());
+
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword())
+            );
+
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            return jwtService.generateToken(userDetails);
+
+        } catch (Exception e) {
+            System.out.println("Login Failed! Reason: " + e.getMessage());
+            throw e;
+        }
     }
 
     @PostMapping("/simple-login")
@@ -30,13 +48,5 @@ public class AuthController {
         } else {
             return "Login failed!";
         }
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-        );
-        return jwtUtil.generateToken(auth.getName());
     }
 }
