@@ -1,7 +1,5 @@
 package com.bookshop.config;
 
-
-
 import com.bookshop.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
