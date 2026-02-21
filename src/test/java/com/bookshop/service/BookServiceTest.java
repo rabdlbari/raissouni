@@ -3,6 +3,7 @@ package com.bookshop.service;
 
 import com.bookshop.entity.Book;
 import com.bookshop.repository.BookRepository;
+import com.bookshop.repository.CategoryRepository;
 import com.bookshop.service.impl.BookServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,12 +20,14 @@ import static org.mockito.Mockito.*;
 class BookServiceTest {
 
     private BookRepository bookRepository;
+    private CategoryRepository categoryRepository;
     private BookServiceImpl bookService;
 
     @BeforeEach
     void setUp() {
         bookRepository = mock(BookRepository.class);
-        bookService = new BookServiceImpl(bookRepository);
+        categoryRepository = mock(CategoryRepository.class); // mock the second dependency
+        bookService = new BookServiceImpl(bookRepository, categoryRepository); // pass both
     }
 
     @Test

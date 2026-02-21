@@ -19,7 +19,6 @@ public class BookServiceImpl implements BookService {
     private final CategoryRepository categoryRepository;
 
 
-
     @Override
     public Page<Book> getAllBooks(Pageable pageable) {
         return bookRepository.findAll(pageable);
