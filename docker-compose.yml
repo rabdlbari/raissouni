@@ -8,7 +8,7 @@ services:
       - MYSQL_DATABASE=bookshop
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD} # Pulls from GitHub Secrets/.env
     ports:
-      - "3306:3306"
+      - "3307:3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
