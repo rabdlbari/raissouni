@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd /home/${{ secrets.SSH_USER }}/bookshop/${{ secrets.SSH_USER }}
+            cd /home/${{ secrets.SSH_USER }}/bookshop
             git pull origin main
             docker compose up -d --build
             
