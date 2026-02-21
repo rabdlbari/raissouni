@@ -1,5 +1,6 @@
 package com.bookshop.controller;
 
+import com.bookshop.dto.UserDto;
 import com.bookshop.entity.User;
 import com.bookshop.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,12 +36,17 @@ public class UserController {
     }
 
     @GetMapping
+<<<<<<< HEAD
     @Operation(summary = "List all users")
     public List<User> getAllUsers() {
+=======
+    public List<UserDto> getAllUsers() {
+>>>>>>> a6f1c6ec850fc206ba1c83809854bfd5b16b4dfb
         return userService.getAllUsers();
     }
 
     @PostMapping("/register")
+<<<<<<< HEAD
     @Operation(
             summary = "Register a new user",
             description = "Create a new user by providing email, password, and role",
@@ -59,6 +65,9 @@ public class UserController {
             }
     )
     public User registerUser(@org.springframework.web.bind.annotation.RequestBody User user) {
+=======
+    public UserDto registerUser(@RequestBody User user) {
+>>>>>>> a6f1c6ec850fc206ba1c83809854bfd5b16b4dfb
         return userService.createUser(user);
     }
 }
