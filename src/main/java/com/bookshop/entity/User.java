@@ -69,4 +69,8 @@ public class User implements UserDetails {
     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
+
+    public void setPassword(String password) {
+        this.passwordHash = password;
+    }
 }
