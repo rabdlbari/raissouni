@@ -30,7 +30,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
       - JWT_SECRET=${JWT_SECRET}
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8088/api/public/categories"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/public/categories"]
       interval: 30s
       timeout: 10s
       retries: 3

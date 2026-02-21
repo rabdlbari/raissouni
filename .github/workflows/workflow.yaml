@@ -34,15 +34,12 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            # Navigate to the specific working directory 
-            cd /home/${{ secrets.SSH_USER }}/bookshop/${{ secrets.SSH_USER }}
-            
-            # Pull changes from the repo 
+            cd /home/${{ secrets.SSH_USER }}/bookshop
             git pull origin main
+            docker compose up -d --build
             
-            # Rebuild and restart containers 
-            sudo docker compose up -d --build
+            echo "Waiting for Spring Boot on port 8088..."
+            sleep 40 
             
-            # Mandatory health check [cite: 83]
-            sleep 20
-            curl -f http://localhost:8080/api/public/categories || exit 1
+            # Use 8088 here because this command runs on the HOST
+            curl -f http://localhost:8088/api/public/categories || (docker logs bookshop-api && exit 1)
