@@ -1,4 +1,4 @@
 package com.bookshop.dto;
 
-public record UserDto() {
+public record UserDto(long id, String email) {
 }

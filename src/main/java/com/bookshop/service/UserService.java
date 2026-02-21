@@ -1,5 +1,6 @@
 package com.bookshop.service;
 
+import com.bookshop.dto.UserDto;
 import com.bookshop.entity.User;
 import com.bookshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,15 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
+    public List<UserDto> getAllUsers() {
+        return userRepo.findAll().stream().map(this::toDto).toList();
     }
 
-    public User createUser(User user) {
-        return userRepo.save(user);
+    public UserDto createUser(User user) {
+        return toDto(userRepo.save(user));
+    }
+
+    public UserDto toDto(User user){
+        return new UserDto(user.getId(), user.getEmail());
     }
 }
