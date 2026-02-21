@@ -24,7 +24,7 @@ jobs:
 
       - name: 2. Build Docker Image
         # Build the API Docker image
-        run: docker build -t bookshop-api .
+        run: sudo docker build -t bookshop-api .
 
       - name: 3. Deploy to Server via SSH
         # Deploy using SSH [cite: 79, 80]
@@ -41,7 +41,7 @@ jobs:
             git pull origin main
             
             # Rebuild and restart containers 
-            docker compose up -d --build
+            sudo docker compose up -d --build
             
             # Mandatory health check [cite: 83]
             sleep 20
