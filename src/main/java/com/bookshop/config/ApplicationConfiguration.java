@@ -1,6 +1,7 @@
 package com.bookshop.config;
 
 
+import com.bookshop.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,9 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class ApplicationConfiguration {
-    private final UserRepo userRepo;
+    private final UserRepository userRepo;
 
-    public ApplicationConfiguration(UserRepo userRepo) {
+    public ApplicationConfiguration(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 
@@ -36,12 +37,10 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-
+    AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService,
+                                                  BCryptPasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
 }

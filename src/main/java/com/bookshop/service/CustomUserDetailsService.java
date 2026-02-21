@@ -1,7 +1,7 @@
 package com.bookshop.service;
 
 import com.bookshop.entity.User;
-import com.bookshop.repository.UserRepo;
+import com.bookshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepo userRepo;
+    private final UserRepository userRepo;
 
     @Autowired
-    public CustomUserDetailsService(UserRepo userRepo) {
+    public CustomUserDetailsService(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 
