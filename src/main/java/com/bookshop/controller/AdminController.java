@@ -1,8 +1,7 @@
 package com.bookshop.controller;
 
-
 import com.bookshop.dto.BookDTO;
-import com.bookshop.service.impl.BookServiceImpl;
+import com.bookshop.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
 public class AdminController {
-    private BookServiceImpl bookService;
+
+    private final BookService bookService;
 
     @PostMapping("/books")
     public BookDTO addBook(@RequestBody BookDTO dto){
