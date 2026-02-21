@@ -18,8 +18,6 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
 
-
-
     @Override
     public Page<Book> getAllBooks(Pageable pageable) {
         return bookRepository.findAll(pageable);
@@ -40,6 +38,7 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findByPriceBetween(minPrice, maxPrice, pageable);
     }
 
+    @Override // تمت إضافتها
     public BookDTO saveBook(BookDTO dto) {
 
         Book book;
@@ -67,6 +66,7 @@ public class BookServiceImpl implements BookService {
         return toDTO(saved);
     }
 
+    @Override // تمت إضافتها
     public void deleteBook(Long id) {
         if (!bookRepository.existsById(id)) {
             throw new RuntimeException("Book not found: " + id);
