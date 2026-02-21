@@ -1,5 +1,6 @@
 package com.bookshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import java.math.BigDecimal;
@@ -28,6 +29,7 @@ public class Book {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
