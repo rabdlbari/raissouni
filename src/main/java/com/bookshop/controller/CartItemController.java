@@ -2,7 +2,7 @@ package com.bookshop.controller;
 
 import com.bookshop.dto.CartItemDTO;
 import com.bookshop.service.CartItemService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,26 +13,39 @@ public class CartItemController {
 
     private final CartItemService cartService;
 
-    @Autowired
     public CartItemController(CartItemService cartService) {
         this.cartService = cartService;
     }
 
-    // Get all items for a user
-    @GetMapping("/{userId}")
-    public List<CartItemDTO> getCartItems(@PathVariable Long userId) {
-        return cartService.getCartItemsByUser(userId);
+    // GET /api/cart
+    @GetMapping
+    public List<CartItemDTO> getCart(Authentication authentication) {
+        String email = authentication.getName();
+        return cartService.getCartItems(email);
     }
 
-    // Add or update an item
-    @PostMapping
-    public CartItemDTO addCartItem(@RequestBody CartItemDTO dto) {
-        return cartService.addOrUpdateCartItem(dto);
+    // POST /api/cart/items
+    @PostMapping("/items")
+    public CartItemDTO addItem(@RequestBody CartItemDTO dto,
+                               Authentication authentication) {
+        String email = authentication.getName();
+        return cartService.addItem(email, dto);
     }
 
-    // Delete an item
-    @DeleteMapping("/{userId}/{bookId}")
-    public void deleteCartItem(@PathVariable Long userId, @PathVariable Long bookId) {
-        cartService.deleteCartItem(userId, bookId);
+    // PUT /api/cart/items/{itemId}
+    @PutMapping("/items/{itemId}")
+    public CartItemDTO updateItem(@PathVariable Long itemId,
+                                  @RequestBody CartItemDTO dto,
+                                  Authentication authentication) {
+        String email = authentication.getName();
+        return cartService.updateItem(email, itemId, dto.getQuantity());
+    }
+
+    // DELETE /api/cart/items/{itemId}
+    @DeleteMapping("/items/{itemId}")
+    public void deleteItem(@PathVariable Long itemId,
+                           Authentication authentication) {
+        String email = authentication.getName();
+        cartService.deleteItem(email, itemId);
     }
 }
