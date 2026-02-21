@@ -1,5 +1,6 @@
 package com.bookshop.controller;
 
+import com.bookshop.dto.UserDto;
 import com.bookshop.entity.User;
 import com.bookshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,13 @@ public class UserController {
 
     // Admin-only: get all users
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
 
     // Optional: register
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
+    public UserDto registerUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 }
