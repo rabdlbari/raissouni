@@ -18,9 +18,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: 1. Build and Test
+      - name: 1. Build
         # Perform build and tests as required
-        run: mvn clean package -DskipTests
+        run: mvn clean package -Dmaven.test.skip=true
 
       - name: 2. Build Docker Image
         # Build the API Docker image
