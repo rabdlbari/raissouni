@@ -36,17 +36,14 @@ public class UserController {
     }
 
     @GetMapping
-<<<<<<< HEAD
     @Operation(summary = "List all users")
+
     public List<User> getAllUsers() {
-=======
-    public List<UserDto> getAllUsers() {
->>>>>>> a6f1c6ec850fc206ba1c83809854bfd5b16b4dfb
+
         return userService.getAllUsers();
     }
 
     @PostMapping("/register")
-<<<<<<< HEAD
     @Operation(
             summary = "Register a new user",
             description = "Create a new user by providing email, password, and role",
@@ -64,10 +61,7 @@ public class UserController {
                     @ApiResponse(responseCode = "400", description = "Invalid Input")
             }
     )
-    public User registerUser(@org.springframework.web.bind.annotation.RequestBody User user) {
-=======
-    public UserDto registerUser(@RequestBody User user) {
->>>>>>> a6f1c6ec850fc206ba1c83809854bfd5b16b4dfb
+    public User registerUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 }
